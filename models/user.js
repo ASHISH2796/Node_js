@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const passportLocalMangoose =require('passport-local-mangoose');
+const passportLocalMangoose =require('passport-local-mongoose');
 const Schema =mongoose.Schema;
 
 const UserSchema =new Schema({
