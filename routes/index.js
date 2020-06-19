@@ -13,9 +13,7 @@ router.get('/register', function(req, res, next) {
 });
 
 /* POST register page. */
-router.post('/register', function(req, res, next) {
-  res.send('POST /register');
-});
+router.post('/register',postRegister );
 
 /* GET login page. */
 router.get('/login', function(req, res, next) {
