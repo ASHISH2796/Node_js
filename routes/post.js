@@ -1,10 +1,10 @@
 const express = require('express');
+const { getPost } = require('../controller/Post');
+const {errorHandler } =require('../middleware');
 const router = express.Router();
 
 /* GET posts index /post */
-router.get('/', (req, res, next)=>{
-    res.send("in post routes");
-  });
+router.get('/', errorHandler(getPost));
 /* GET posts  new /post/new */
 router.get('/new', (req, res, next)=>{
     res.send("in post routes /new");
