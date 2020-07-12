@@ -24,7 +24,7 @@ router.get('/:id', asyncErrorHandler(postShow));
 /* GET posts edit /post/:id/edit */
 router.get('/:id/edit',asyncErrorHandler(postEdit));
 /* PUT posts update /post/:id */
-router.put('/:id', asyncErrorHandler(postUpdate));
+router.put('/:id',upload.array('images', 4), asyncErrorHandler(postUpdate));
 /* GET Post delete /post */
   router.delete('/:id', asyncErrorHandler(postDelete));
 

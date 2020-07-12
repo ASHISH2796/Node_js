@@ -6,9 +6,9 @@
     <div><input type="file" accept="images/*" name="images" multiple  id="imageUpload"></div>
     <div>
         <% post.images.forEach((image,i)=>{%>
-            <image src ="<%= image.url %>" alt="image_url">
+            <image src ="<%= image.url %>" alt="image_url" width="200px">
             <lable for="image<%= i %>">Delete</lable>
-            <input type="checkbox" name="deleteImage" class="imageDeleteCheckbox" id="image<%= i %>" value="image<%= image.public_id %>">
+            <input type="checkbox" name="deleteImages[]" class="imageDeleteCheckbox" id="image<%= i %>" value="<%= image.public_id %>">
         <% });%>    
     </div>
     <div><textarea name="post[description]" placeholder="Description"><%= post.description %></textarea><div>
@@ -30,7 +30,7 @@
         if(newTotalImage > 4){
             event.preventDefault();
             let removalImgCount =newTotalImage-4;
-            alert(`You need to remove atleast ${removalImgCount} no . of Image${removalImgCount===1 ? '':'s' }`);
+            alert(`You need to remove atleast ${removalImgCount} (more) no . of Image${removalImgCount===1 ? '':'s' }`);
         }
     });
 </script>
