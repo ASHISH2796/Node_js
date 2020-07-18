@@ -51,6 +51,7 @@ module.exports ={
 
     async postUpdate(req, res, next){
         let post =await Post.findById(req.params.id);
+        //file update check
         if(req.body.deleteImages && req.body.deleteImages.length)
         {
             let deleteImages =req.body.deleteImages;
@@ -81,7 +82,17 @@ module.exports ={
         post.title = req.body.post.title;
         post.description =req.body.post.description;
         post.price =req.body.post.price;
-        post.location =req.body.post.location;
+        //location update check
+        if(req.body.post.location !== post.location)
+        {
+            let response =await geocodingClient.forwardGeocode({
+                query:req.body.post.location,
+                limit: 1
+              })
+                .send();
+            post.coordinates =response.body.features[0].geometry.coordinates;
+            post.location =req.body.post.location;  
+        }
         post.save();
         res.redirect(`/post/${post.id}`);
     },
