@@ -18,7 +18,7 @@ const reviewRouter = require('./routes/reviews');
 const app = express();
 
 //Db connection 
-mongoose.connect('mongodb://192.168.99.100:27017/surf-shop',{ useNewUrlParser: true });
+mongoose.connect('mongodb://192.168.99.100:27017/surf-shop-mapbox',{ useNewUrlParser: true });
 
 const db =mongoose.connection;
 db.on('error',console.error.bind(console ,'connection error:'));
@@ -29,6 +29,8 @@ db.once('open',()=>{
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+//set public asses directory
+app.use(express.static('public'));
 
 app.use(logger('dev'));
 app.use(express.json());
