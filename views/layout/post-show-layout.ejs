@@ -9,6 +9,7 @@
   </head>
   <body>
       <% include ../partials/navbar %>
+      <% include ../partials/flashMessage-layout %>
       <%-body -%> <!--Place where  view will be render or added inside layout-->
       <script>
         var post = <%- JSON.stringify(post) %>;
