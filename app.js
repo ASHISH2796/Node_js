@@ -54,6 +54,12 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+//set title 
+app.use(function(req,res,next){
+  res.locals.title ='Surf-Shop';
+  next();
+});
+
 app.use('/', indexRouter);
 app.use('/post',postRouter);
 app.use('/post/:id/reviews',reviewRouter);

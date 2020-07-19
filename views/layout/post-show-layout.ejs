@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <link href='/stylesheets/post-show.css' rel='stylesheet' />
   </head>
   <body>
-      <h1>layout wrks : post-show</h1>
+      <% include ../partials/navbar %>
       <%-body -%> <!--Place where  view will be render or added inside layout-->
       <script>
         var post = <%- JSON.stringify(post) %>;
