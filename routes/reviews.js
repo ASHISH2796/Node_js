@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router({mergeParams:true});
+const {
+  reviewCreate,
+  reviewUpdate,
+  reviewDelete
+} = require('../controller/reviews');
+const {asyncErrorHandler } =require('../middleware');
 
 /* POST  reviews create /post/:id/reviews */
-router.post('/', (req, res, next)=>{
-    res.send("in create routes create : /post/:id/reviews ");
-  });
+router.post('/', asyncErrorHandler(reviewCreate));
   /* PUT reviewss update /reviews/:review_id */
   router.put('/:review_id', (req, res, next)=>{
     res.send("in reviews routes update : /reviews/:review_id");
