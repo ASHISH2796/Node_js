@@ -31,10 +31,15 @@
     <div>
         <h2>Review</h2>
     </div>
-    <div>
+    <div>   
         <% post.reviews.forEach(function(review){ %>
-            <%= review.body %>
-            <%= review.rating %>
+            <div>
+            Author : <%= review.author.username %><br>
+            <%= review.body %><br>
+            <%= review.rating %><br>
+            </div>
+            <hr>
         <% }); %>    
+
     </div>   
 </div>   

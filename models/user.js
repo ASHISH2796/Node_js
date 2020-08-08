@@ -3,7 +3,7 @@ const passportLocalMangoose =require('passport-local-mongoose');
 const Schema =mongoose.Schema;
 
 const UserSchema =new Schema({
-    email:String,
+    username:String,
     image:String
 });
 UserSchema.plugin(passportLocalMangoose);
