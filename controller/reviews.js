@@ -12,7 +12,7 @@ module.exports ={
         if(hasReviewed)
         {
             req.session.error ="Sorry you have already given a review. ";
-            res.redirect(`/post/${post.id}`);
+            return res.redirect(`/post/${post.id}`);
         }
         req.body.review.author =req.user._id;//Set user name 
        // console.log("req.body.review.author :"+req.body.review.author);
