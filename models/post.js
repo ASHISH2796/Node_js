@@ -1,5 +1,6 @@
 const mongoose =require('mongoose');
 const Schema =mongoose.Schema;
+const Review =require('./review');
 
 const PostSchema = new Schema(
     {
@@ -24,5 +25,12 @@ const PostSchema = new Schema(
         ]
     }
 ); 
-
+//add code to  remove review if post deleted it will be called when .remove is called on post
+PostSchema.pre('remove' , async function() {
+    await Review.remove({
+        _id :{
+            $in:this.reviews
+        }
+    });
+});
 module.exports =mongoose.model('Post' ,PostSchema);
