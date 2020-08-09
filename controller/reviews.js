@@ -4,7 +4,16 @@ const Review =require('../models/review');
 module.exports ={
     //Create review
     async reviewCreate(req,res,next){
-        let post = await Post.findById(req.params.id);
+        let post = await Post.findById(req.params.id).populate('reviews').exec();
+        let hasReviewed =post.reviews.filter(review => {
+            return review.author.equals(req.user._id);
+        }).length;
+
+        if(hasReviewed)
+        {
+            req.session.error ="Sorry you have already given a review. ";
+            res.redirect(`/post/${post.id}`);
+        }
         req.body.review.author =req.user._id;//Set user name 
        // console.log("req.body.review.author :"+req.body.review.author);
         let review =await Review.create(req.body.review);
