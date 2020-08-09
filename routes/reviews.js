@@ -12,9 +12,7 @@ router.post('/', asyncErrorHandler(reviewCreate));
   /* PUT reviewss update /reviews/:review_id */
   router.put('/:review_id',isReviewAuthor,asyncErrorHandler(reviewUpdate));
 /* GET reviews index /reviews */
-  router.delete('/:review_id', (req, res, next)=>{
-    res.send("in reviews routes delete /post/:id//reviews/:review_id");
-  });
+  router.delete('/:review_id', isReviewAuthor,asyncErrorHandler(reviewDelete));
 
   module.exports = router;
   

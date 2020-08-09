@@ -40,12 +40,19 @@
             </div>
             <% if(review.author.equals(currentUser._id) ){%>
             <div>
+                <div>
                 <button type="submit" class="toggle-edit-form">Edit</button>
-                <form action="/post/<%= post.id %>/reviews/<%= review.id %>?_method=PUT" method="POST" class="edit-review-form">
-                    <textarea name="review[body]" required><%= review.body %></textarea>
-                    <input type="number" name="review[rating]" min="1" max="5" step="1" required value="<%= review.rating %>">
-                    <input type="submit" value="Update">
-                </form>
+                    <form action="/post/<%= post.id %>/reviews/<%= review.id %>?_method=PUT" method="POST" class="edit-review-form">
+                        <textarea name="review[body]" required><%= review.body %></textarea>
+                        <input type="number" name="review[rating]" min="1" max="5" step="1" required value="<%= review.rating %>">
+                        <input type="submit" value="Update">
+                    </form>
+                </div>
+                <div>
+                    <form action="/post/<%=post.id %>/reviews/<%= review.id %>/?_method=DELETE" method="POST">
+                        <input type="submit" value="Delete">
+                    </form>
+                </div>
             </div>
             <% } %>
             <hr> 
