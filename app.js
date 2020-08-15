@@ -10,6 +10,8 @@ const User =require('./models/user');
 const session=require('express-session');
 const mongoose =require('mongoose');
 const methodOverride = require('method-override');
+// const seedPosts =require('./seeds');
+// seedPosts(); // added to test  pagination to create dummy data 
 
 const indexRouter = require('./routes/index');
 const postRouter = require('./routes/post');
