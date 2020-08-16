@@ -54,7 +54,8 @@ module.exports ={
             }
         });
         //console.log('post' ,post);
-        res.render('posts/show',{post});
+        const floorRating=post.calculateAvgRating(); // will be used in  views
+        res.render('posts/show',{post,floorRating});
     },
 
     async postEdit(req, res, next){

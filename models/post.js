@@ -23,7 +23,11 @@ const PostSchema = new Schema(
                 type:Schema.Types.ObjectId,
                 ref:'Review'
             }
-        ]
+        ],
+        avgRating : {
+            type: Number,
+            default :0
+        }
     }
 ); 
 //add code to  remove review if post deleted it will be called when .remove is called on post
@@ -34,5 +38,22 @@ PostSchema.pre('remove' , async function() {
         }
     });
 });
+
+PostSchema.methods.calculateAvgRating = function(){
+   let ratingcal =0;
+   if(this.reviews.length)
+   {   
+    this.reviews.forEach(element => {
+       ratingcal = ratingcal + element.rating;    
+    });
+    this.avgRating=Math.round((ratingcal/this.reviews.length)*10)/10;
+   }
+   else {
+    this.avgRating = ratingcal;
+   }
+   const avgFloorRating =Math.floor(this.avgRating);
+   this.save();
+   return avgFloorRating;
+}
 PostSchema.plugin(mongoosePaginate); // for pagination
 module.exports =mongoose.model('Post' ,PostSchema);

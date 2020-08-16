@@ -8,12 +8,16 @@ async function seedPosts(){
         const post ={
             title : faker.lorem.word(),
             description:faker.lorem.text(),
+            coordinates : [
+                23.8285537394706,
+                38.5890212896367
+            ],
             author:{
                 '_id' : '5f2e7bcc1e2e0832d85211ad',
                 'username' : 'Ashish'
             }
         }
-        console.log(post);
+        //console.log(post);
         await Post.create(post);
     }
     console.log("40  data added");
