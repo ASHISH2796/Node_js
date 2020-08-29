@@ -1,5 +1,6 @@
 const Review = require('../models/review');
-const { session } = require('passport');
+const User = require('../models/user');
+//const { session } = require('passport');
 
 module.exports = {
     asyncErrorHandler: (fn) =>
@@ -16,6 +17,14 @@ module.exports = {
         }
         req.session.error ='Your  Unathorize to update Review!';
         return res.redirect('/');
+    },
+    isCheckUserExists: async(req,res,next)=>{
+        let isUserExists =await User.findOne({'email':req.body.email});
+        if(isUserExists){
+            req.session.error ='A user with the given email is already registered';
+            return res.redirect('back');
+        } 
+        next();
     }
 
 
