@@ -33,6 +33,7 @@ module.exports ={
           })
             .send();
         req.body.post.geometry =response.body.features[0].geometry; 
+        req.body.post.author =req.user._id;
         let post = new Post(req.body.post);
         post.properties.description = `<strong><a href="/post/${post._id}">${post.title}</a></strong><p>${post.location}</p><p>${post.description.substring(0, 20)}...</p>`;
         await post.save();
@@ -55,12 +56,14 @@ module.exports ={
     },
 
     async postEdit(req, res, next){
-        let post =await Post.findById(req.params.id);
-        res.render('posts/edit',{ post });
+        // let post =await Post.findById(req.params.id);  code move to middleware layer
+        // res.render('posts/edit',{ post });
+        res.render('posts/edit');
     },
 
     async postUpdate(req, res, next){
-        let post =await Post.findById(req.params.id);
+        //let post =await Post.findById(req.params.id); code move to middleware layer
+        const {post} =res.locals;
         //file update check
         if(req.body.deleteImages && req.body.deleteImages.length)
         {
@@ -108,7 +111,8 @@ module.exports ={
     },
 
     async postDelete(req, res, next){
-        let post = await Post.findById(req.params.id);
+        //let post = await Post.findById(req.params.id); code move to middleware layer
+        const {post} =res.locals;
         for(const image of post.images)
         {
             await cloudinary.v2.uploader.destroy(image.public_id);

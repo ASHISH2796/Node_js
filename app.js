@@ -10,6 +10,7 @@ const User =require('./models/user');
 const session=require('express-session');
 const mongoose =require('mongoose');
 const methodOverride = require('method-override');
+const favicon =require('serve-favicon');
 //const seedPosts =require('./seeds');
 //seedPosts(); // added to test  pagination to create dummy data 
 
@@ -37,6 +38,7 @@ app.set('view engine', 'ejs');
 //set public asses directory
 app.use(express.static('public'));
 
+app.use(favicon(path.join(__dirname, 'public','favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

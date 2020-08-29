@@ -10,13 +10,13 @@ router.get('/', asyncErrorHandler(landingPage));
 router.get('/register', getRegister);
 
 /* POST register page. */
-router.post('/register',asyncErrorHandler(isCheckUserExists),asyncErrorHandler(postRegister) );
+router.post('/register',asyncErrorHandler(postRegister));
 
 /* GET login page. */
 router.get('/login',getLogin);
 
 /* POST login page. */
-router.post('/login',postLogin);
+router.post('/login',asyncErrorHandler(postLogin));
 
 /* GET logout page. */
 router.get('/logout', getLogout);
