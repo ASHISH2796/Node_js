@@ -55,7 +55,7 @@ module.exports ={
         res.render('posts/show',{post,floorRating,mapBoxToken});
     },
 
-    async postEdit(req, res, next){
+     postEdit(req, res, next){
         // let post =await Post.findById(req.params.id);  code move to middleware layer
         // res.render('posts/edit',{ post });
         res.render('posts/edit');
@@ -106,7 +106,7 @@ module.exports ={
             post.location =req.body.post.location;  
         }
         post.properties.description = `<strong><a href="/post/${post._id}">${post.title}</a></strong><p>${post.location}</p><p>${post.description.substring(0, 20)}...</p>`;
-        post.save();
+        await post.save();
         res.redirect(`/post/${post.id}`);
     },
 

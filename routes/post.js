@@ -24,7 +24,7 @@ router.post('/',isLoggedIn,upload.array('images', 4), asyncErrorHandler(postCrea
 /* GET posts  show /post/:id */
 router.get('/:id', asyncErrorHandler(postShow));
 /* GET posts edit /post/:id/edit */
-router.get('/:id/edit',isLoggedIn,asyncErrorHandler(isAuthor),asyncErrorHandler(postEdit));
+router.get('/:id/edit',isLoggedIn,asyncErrorHandler(isAuthor),postEdit);
 /* PUT posts update /post/:id */
 router.put('/:id',isLoggedIn,asyncErrorHandler(isAuthor),upload.array('images', 4),asyncErrorHandler(postUpdate));
 /* GET Post delete /post */

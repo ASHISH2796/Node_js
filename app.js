@@ -22,7 +22,7 @@ const reviewRouter = require('./routes/reviews');
 const app = express();
 
 //Db connection 
-mongoose.connect('mongodb://192.168.99.100:27017/surf-shop',{ useNewUrlParser: true });
+mongoose.connect('mongodb://192.168.99.100:27017/surf-shop',{ useNewUrlParser: true , useCreateIndex:true ,useUnifiedTopology: true});
 
 const db =mongoose.connection;
 db.on('error',console.error.bind(console ,'connection error:'));
