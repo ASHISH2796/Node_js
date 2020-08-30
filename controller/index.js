@@ -63,5 +63,9 @@ module.exports ={
     getLogout(req, res, next) {
             req.logOut();
             res.redirect('/');
+    },
+    async getProfile(req,res,next){
+       let posts = await Post.find().where('author').equals(req.user._id).limit(10).exec();
+        res.render('profile',{posts});
     }
 }
