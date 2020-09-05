@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { postRegister ,postLogin ,getLogout, landingPage,getRegister,getLogin,getProfile} =require('../controller/index');
-const { asyncErrorHandler,isLoggedIn } =require('../middleware/index');
+const { postRegister ,postLogin ,getLogout, landingPage,getRegister,getLogin,getProfile,updateProfile} =require('../controller/index');
+const { asyncErrorHandler,isLoggedIn,isValidPassword ,changePassword } =require('../middleware/index');
 
 /* GET home landing page. */
 router.get('/', asyncErrorHandler(landingPage));
@@ -24,9 +24,7 @@ router.get('/logout', getLogout);
 router.get('/profile',isLoggedIn, asyncErrorHandler(getProfile));
 
 /* PUT profile page. */
-router.put('/profile/:user_id', function(req, res, next) {
-  res.send('PUT /profile/:user_id');
-});
+router.put('/profile/:user_id',isLoggedIn, asyncErrorHandler(isValidPassword),asyncErrorHandler(changePassword),asyncErrorHandler(updateProfile));
 
 /* GET forgot-pw page. */
 router.get('/forgot-pw', function(req, res, next) {

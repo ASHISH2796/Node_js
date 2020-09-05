@@ -1,7 +1,9 @@
 const Review = require('../models/review');
 const User = require('../models/user');
 const Post =require('../models/post');
+const { session } = require('passport');
 //const { session } = require('passport');
+require('locus');
 
 module.exports = {
     asyncErrorHandler: (fn) =>
@@ -43,9 +45,42 @@ module.exports = {
     }
     req.session.error ='Access denied !';
     res.redirect('back');
+   },
+   isValidPassword: async (req,res,next)=>{
+     const {user}=await User.authenticate()(req.user.username,req.body.currentPassword);
+        if(user)
+        {  
+            res.locals.user =user;
+            next();
+        }
+        else
+        {
+            req.session.error="Incorrect Username or Password!";
+            return res.redirect('/profile');
+        }
+   },
+   changePassword : async (req,res,next)=>{
+        const {newPassword,passwordConfirmation} =req.body;
+        if(newPassword && !passwordConfirmation)
+        {
+            req.session.error="Confirmation password missing!"
+            res.redirect('/profile');
+        }
+        if(newPassword && passwordConfirmation){
+            const {user} =res.locals;
+            if(newPassword=== passwordConfirmation){
+                await user.setPassword(newPassword);
+                next();
+            }
+            else
+            {
+                req.session.error ="Incorrect confirmation Password !";
+                res.redirect('/profile');
+            }
+        }
+        else {
+            next();
+        } 
    }
-
-
-
 
 }
