@@ -3,6 +3,8 @@ const Post =require('../models/post');
 const mapBoxToken =process.env.MAPBOX_TOKEN;
 const passport =require('passport');
 const util =require('util');
+const { cloudinary } = require('../cloudinary');
+const {deleteProfileImage} =require('../middleware');
 
 module.exports ={
     async landingPage(req,res,next){
@@ -17,7 +19,12 @@ module.exports ={
         //     username:req.body.username,
         //     email: req.body.email,
         //     image: req.body.image
-        // }); 
+        // });
+        if(req.file)
+        {
+            const { secure_url ,public_id} =req.file;
+            req.body.image ={secure_url ,public_id};
+        } 
         try{
             const user =await User.register( new User(req.body),req.body.password);
             req.login(user ,function(err) {
@@ -27,6 +34,7 @@ module.exports ={
             });
         }
         catch(err){
+            deleteProfileImage(req);
             const {username,email} =req.body;
             let error =err.message;
             if(error.includes('duplicate') &&  error.includes('index: email_1 dup key')){
@@ -78,6 +86,12 @@ module.exports ={
         const { user } =res.locals;
         if(username) user.username =username;
         if(email) user.email =email;
+        console.log(cloudinary.v2);
+        if(req.file){
+            if(user.image.public_id) await cloudinary.v2.uploader.destroy(user.image.public_id);
+            const { secure_url ,public_id} =req.file;
+            user.image ={secure_url ,public_id};
+        }
         await user.save();
        const login =util.promisify(req.login.bind(req));
        await login(user);

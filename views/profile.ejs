@@ -1,5 +1,5 @@
 <% layout('layout/boilerplate') -%>
-<h2><%= currentUser.username %>'s Profile</h2>
+<h2><img src="<%= currentUser.image.secure_url %>" alt="<%= currentUser.username %>'s Profile" class="profile-image"></img><%= currentUser.username %>'s Profile</h2>
 <p>Recent Post :</p>
 <% posts.forEach(post=>{ %>
     <div>
@@ -8,7 +8,7 @@
 <% }) ;%> 
 
 <div>
-    <form action="/profile/<%= currentUser._id %>?_method=PUT"  method="POST">
+    <form action="/profile/<%= currentUser._id %>?_method=PUT"  method="POST" enctype="multipart/form-data" >
     <div>
         <label for="username">UserName :</label>
         <input type="text" name="username" id="username" placeholder="username" autofocus required value="<%= currentUser.username %>">
@@ -32,6 +32,7 @@
     </div>
     <div>
         <label for="image">Image :</label>
+        <small>(this will delete existing image)</small>
         <input type="file" name="image" id="image">
     </div>
     <input type="submit" id="submit-btn">

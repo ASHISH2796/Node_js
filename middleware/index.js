@@ -3,9 +3,9 @@ const User = require('../models/user');
 const Post =require('../models/post');
 const { session } = require('passport');
 //const { session } = require('passport');
-require('locus');
+const { cloudinary } = require('../cloudinary');
 
-module.exports = {
+const middleware = {
     asyncErrorHandler: (fn) =>
         (req, res, next) =>{
             Promise.resolve(fn(req ,res ,next))
@@ -55,6 +55,7 @@ module.exports = {
         }
         else
         {
+            middleware.deleteProfileImage(req);
             req.session.error="Incorrect Username or Password!";
             return res.redirect('/profile');
         }
@@ -63,6 +64,7 @@ module.exports = {
         const {newPassword,passwordConfirmation} =req.body;
         if(newPassword && !passwordConfirmation)
         {
+            middleware.deleteProfileImage(req);
             req.session.error="Confirmation password missing!"
             res.redirect('/profile');
         }
@@ -74,6 +76,7 @@ module.exports = {
             }
             else
             {
+                middleware.deleteProfileImage(req);
                 req.session.error ="Incorrect confirmation Password !";
                 res.redirect('/profile');
             }
@@ -81,6 +84,11 @@ module.exports = {
         else {
             next();
         } 
+   },
+
+   deleteProfileImage : async (req) =>{
+       if(req.file) await cloudinary.v2.uploader.destroy(req.file.public_id);
    }
 
-}
+};
+module.exports =middleware;
