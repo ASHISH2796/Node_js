@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { postRegister ,postLogin ,getLogout, landingPage,getRegister,getLogin,getProfile,updateProfile} =require('../controller/index');
+const { postRegister ,postLogin ,getLogout, landingPage,getRegister,getLogin,getProfile,updateProfile,getForgotpwd,putForgotpwd,getReset,putReset} =require('../controller/index');
 const { asyncErrorHandler,isLoggedIn,isValidPassword ,changePassword } =require('../middleware/index');
 const multer =require('multer');
 const { storage } = require('../cloudinary');
@@ -30,23 +30,15 @@ router.get('/profile',isLoggedIn, asyncErrorHandler(getProfile));
 router.put('/profile/:user_id',isLoggedIn,upload.single('image'), asyncErrorHandler(isValidPassword),asyncErrorHandler(changePassword),asyncErrorHandler(updateProfile));
 
 /* GET forgot-pw page. */
-router.get('/forgot-pw', function(req, res, next) {
-  res.send('GET /forgot-pw');
-});
+router.get('/forgot-password', getForgotpwd);
 
 /* PUT forgot-pw page. */
-router.put('/forgot-pw', function(req, res, next) {
-  res.send('PUT /forgot-pw');
-});
+router.put('/forgot-password', asyncErrorHandler(putForgotpwd));
 
 /* GET reset-pw/:token page. */
-router.get('/reset-pw/:token', function(req, res, next) {
-  res.send('GET /reset-pw/:token');
-});
+router.get('/reset/:token',asyncErrorHandler(getReset));
 
 /* PUT reset-pw/:token page. */
-router.put('/reset-pw/:token', function(req, res, next) {
-  res.send('PUT /reset-pw/:token');
-});
+router.put('/reset/:token', asyncErrorHandler(putReset));
 
 module.exports = router;

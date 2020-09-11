@@ -8,7 +8,9 @@ const UserSchema =new Schema({
     image: {
         secure_url : {type: String ,  default :'/images/default-profile.jpg'},
         public_id :String
-    }
+    },
+    resetPasswwordToken: String,
+    resetPasswwordExpires:Date
 });
 UserSchema.plugin(passportLocalMangoose);
 
